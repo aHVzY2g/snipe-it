@@ -110,7 +110,7 @@ class CheckoutAssetNotification extends Notification
         return $notifyBy;
     }
 
-    public function toSlack()
+    public function toSlack(): mixed
     {
         $target = $this->target;
         $admin = $this->admin;
@@ -122,6 +122,11 @@ class CheckoutAssetNotification extends Notification
         $fields = [
             'To' => '<'.$target->present()->viewUrl().'|'.$target->present()->fullName().'>',
             'By' => '<'.$admin->present()->viewUrl().'|'.$admin->present()->fullName().'>',
+            'employee_num' => $target->present()->employee_num,
+            'employee_email' =>  $target->present()->email,
+            'asset_id' =>  $item->present()->id,
+            'asset_tag' =>  $item->present()->asset_tag,
+            'asset_serial' =>  $item->present()->serial,
         ];
 
         if (($this->expected_checkin) && ($this->expected_checkin != '')) {

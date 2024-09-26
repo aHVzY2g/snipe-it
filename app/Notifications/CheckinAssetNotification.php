@@ -78,6 +78,7 @@ class CheckinAssetNotification extends Notification
 
     public function toSlack()
     {
+        $target = $this->target;
         $admin = $this->admin;
         $item = $this->item;
         $note = $this->note;
@@ -88,6 +89,11 @@ class CheckinAssetNotification extends Notification
             trans('general.administrator') => '<'.$admin->present()->viewUrl().'|'.$admin->present()->fullName().'>',
             trans('general.status') => $item->assetstatus->name,
             trans('general.location') => ($item->location) ? $item->location->name : '',
+            'employee_num' => $target->present()->employee_num,
+            'employee_email' =>  $target->present()->email,
+            'asset_id' =>  $item->present()->id,
+            'asset_tag' =>  $item->present()->asset_tag,
+            'asset_serial' =>  $item->present()->serial,
         ];
 
         return (new SlackMessage)
